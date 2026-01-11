@@ -21,19 +21,10 @@
         }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #fb923c; 
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fb923c; }
 
         /* Animations */
         @keyframes fade-in {
@@ -43,18 +34,9 @@
         .animate-fade-in {
             animation: fade-in 0.3s ease-out forwards;
         }
-        
-        /* Utility for hiding scrollbar in horizontal lists */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
     </style>
 </head>
-<body class="bg-white text-gray-900 flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-900 flex flex-col min-h-screen">
 
     <!-- Navigation -->
     <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
@@ -69,23 +51,19 @@
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center gap-8">
-                    <button onclick="app.router.navigate('home')" class="nav-link font-bold transition-colors text-gray-600 hover:text-orange-600" data-page="home">الرئيسية</button>
-                    <button onclick="app.router.navigate('browse')" class="nav-link font-bold transition-colors text-gray-600 hover:text-orange-600" data-page="browse">تصفح القطط</button>
-                    <button onclick="app.router.navigate('add-cat')" class="nav-link font-bold transition-colors text-gray-600 hover:text-orange-600" data-page="add-cat">للملاجئ</button>
+                <div class="hidden md:flex items-center gap-8" id="desktop-menu">
+                    <!-- Links injected by JS based on role -->
                 </div>
 
-                <!-- CTA -->
-                <div class="hidden md:block">
-                    <button onclick="app.router.navigate('browse')" class="bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-200 hover:shadow-orange-300 transform active:scale-95">
-                        <i data-lucide="heart" class="w-5 h-5"></i> تبنى الآن
-                    </button>
+                <!-- Auth/CTA -->
+                <div class="hidden md:flex items-center gap-4" id="auth-section">
+                    <!-- Auth buttons injected by JS -->
                 </div>
 
                 <!-- Mobile Menu Toggle -->
                 <div class="md:hidden">
                     <button onclick="app.ui.toggleMobileMenu()" class="text-gray-600 p-2">
-                        <i data-lucide="menu" class="w-7 h-7" id="mobile-menu-icon"></i>
+                        <i data-lucide="menu" class="w-7 h-7"></i>
                     </button>
                 </div>
             </div>
@@ -93,18 +71,15 @@
         
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 flex flex-col gap-2 shadow-lg absolute w-full z-40">
-            <button onclick="app.router.navigate('home'); app.ui.toggleMobileMenu()" class="text-right font-bold text-gray-600 p-3 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">الرئيسية</button>
-            <button onclick="app.router.navigate('browse'); app.ui.toggleMobileMenu()" class="text-right font-bold text-gray-600 p-3 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">تصفح القطط</button>
-            <button onclick="app.router.navigate('add-cat'); app.ui.toggleMobileMenu()" class="text-right font-bold text-gray-600 p-3 hover:bg-orange-50 hover:text-orange-600 rounded-lg transition-colors">للملاجئ</button>
+            <!-- Mobile links injected by JS -->
         </div>
     </nav>
 
     <!-- Main Content Area -->
     <main id="app-root" class="flex-grow relative">
-        <!-- Content will be injected here by JS -->
         <div class="flex justify-center items-center h-screen flex-col gap-4">
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
-            <p class="text-gray-500 text-sm">جاري تحميل البيانات...</p>
+            <p class="text-gray-500 text-sm">جاري تهيئة المنصة...</p>
         </div>
     </main>
 
@@ -119,62 +94,58 @@
                     <span class="text-2xl font-black tracking-tight">ملاذ</span>
                 </div>
                 <p class="text-gray-400 text-sm leading-relaxed max-w-sm mb-6">
-                    ملاذ هي منصة غير ربحية تهدف لتوفير حياة كريمة لقطط الشوارع والملاجئ في مصر. نؤمن بأن كل روح تستحق فرصة ثانية.
+                    ملاذ هي منصة تفاعلية حية لربط الملاجئ بالمتبنين. البيانات المعروضة هي بيانات حقيقية تم إضافتها بواسطة المستخدمين.
                 </p>
             </div>
             <div>
-                <h3 class="text-white font-bold mb-6 text-lg">روابط تهمك</h3>
+                <h3 class="text-white font-bold mb-6 text-lg">روابط</h3>
                 <ul class="space-y-4 text-gray-400 text-sm">
-                    <li><button onclick="app.router.navigate('browse')" class="hover:text-orange-500 transition-colors flex items-center gap-2">ابحث عن قطة</button></li>
-                    <li><button onclick="app.router.navigate('add-cat')" class="hover:text-orange-500 transition-colors flex items-center gap-2">للملاجئ والمنقذين</button></li>
+                    <li><button onclick="app.router.navigate('browse')" class="hover:text-orange-500">تصفح القطط</button></li>
+                    <li><button onclick="app.router.navigate('login')" class="hover:text-orange-500">تسجيل دخول</button></li>
                 </ul>
             </div>
             <div>
-                <h3 class="text-white font-bold mb-6 text-lg">تواصل معنا</h3>
+                <h3 class="text-white font-bold mb-6 text-lg">تواصل</h3>
                 <ul class="space-y-4 text-gray-400 text-sm">
                     <li class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-orange-600"></i> القاهرة، مصر</li>
-                    <li class="flex items-center gap-3"><i data-lucide="mail" class="w-4 h-4 text-orange-600"></i> info@malath.eg</li>
+                    <li class="flex items-center gap-3"><i data-lucide="mail" class="w-4 h-4 text-orange-600"></i> support@malath.eg</li>
                 </ul>
             </div>
         </div>
-        <div class="border-t border-gray-800 mt-12 pt-8 text-center">
-            <p class="text-gray-600 text-sm">© 2024 جميع الحقوق محفوظة لمنصة ملاذ.</p>
+        <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-600 text-sm">
+            © 2024 جميع الحقوق محفوظة لمنصة ملاذ.
         </div>
     </footer>
 
-    <!-- Toast Notification Container -->
-    <div id="toast-container" class="fixed bottom-4 left-4 z-50 flex flex-col gap-2"></div>
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 left-4 z-[60] flex flex-col gap-2"></div>
 
-    <!-- Firebase & App Logic -->
+    <!-- Firebase & Application Logic -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js';
-        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
-        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, setDoc, getDoc, query, where } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
 
         // --- Firebase Config ---
         const firebaseConfig = JSON.parse(window.__firebase_config || '{}');
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        // FIX: Renamed 'app' to 'firebaseApp' to avoid conflict with window.app
+        const firebaseApp = initializeApp(firebaseConfig);
+        const auth = getAuth(firebaseApp);
+        const db = getFirestore(firebaseApp);
         const appId = typeof window.__app_id !== 'undefined' ? window.__app_id : 'default-app-id';
 
         // --- Constants ---
-        const GOVERNORATES = [
-            "القاهرة", "الجيزة", "الإسكندرية", "الدقهلية", "الشرقية", 
-            "المنوفية", "القليوبية", "البحيرة", "الغربية", "بور سعيد", 
-            "دمياط", "الإسماعيلية", "السويس", "كفر الشيخ", "الفيوم", 
-            "بني سويف", "المنيا", "أسيوط", "سوهاج", "قنا", "الأقصر", "أسوان"
-        ];
+        const GOVERNORATES = ["القاهرة", "الجيزة", "الإسكندرية", "الدقهلية", "الشرقية", "المنوفية", "القليوبية", "البحيرة", "الغربية", "بور سعيد", "دمياط", "الإسماعيلية", "السويس", "كفر الشيخ", "الفيوم", "بني سويف", "المنيا", "أسيوط", "سوهاج", "قنا", "الأقصر", "أسوان"];
 
-        // --- State Management ---
+        // --- State ---
         const state = {
-            user: null,
+            user: null, // Firebase User
+            profile: null, // { role: 'shelter'|'adopter', name: '...', ... }
             view: 'home',
             cats: [],
             selectedCat: null,
             loading: true,
-            filters: { search: '', governorate: '', gender: '' },
-            adoptionForm: { name: '', phone: '', experience: '', housing: 'apartment' }
+            filters: { search: '', governorate: '', gender: '' }
         };
 
         // --- Core Application Logic ---
@@ -183,13 +154,7 @@
                 navigate: (viewName, params = null) => {
                     state.view = viewName;
                     if (params) state.selectedCat = params;
-                    // Reset scroll
                     window.scrollTo(0, 0);
-                    // Update Active Nav
-                    document.querySelectorAll('.nav-link').forEach(el => {
-                        if(el.dataset.page === viewName) el.classList.add('text-orange-600');
-                        else el.classList.remove('text-orange-600');
-                    });
                     render();
                 }
             },
@@ -201,426 +166,398 @@
                 showToast: (type, message) => {
                     const container = document.getElementById('toast-container');
                     const toast = document.createElement('div');
-                    const colorClass = type === 'success' ? 'bg-gray-900 text-white' : 'bg-red-600 text-white';
+                    const color = type === 'success' ? 'bg-gray-800 text-white' : 'bg-red-600 text-white';
                     const icon = type === 'success' ? 'check-circle' : 'alert-circle';
-                    
-                    toast.className = `${colorClass} px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-fade-in transition-all duration-500`;
-                    toast.innerHTML = `<i data-lucide="${icon}" class="${type==='success'?'text-green-400':'text-white'}"></i> <span class="font-bold">${message}</span>`;
-                    
+                    toast.className = `${color} px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-fade-in transition-all`;
+                    toast.innerHTML = `<i data-lucide="${icon}"></i> <span class="font-bold">${message}</span>`;
                     container.appendChild(toast);
                     lucide.createIcons({ root: toast });
-
-                    setTimeout(() => {
-                        toast.style.opacity = '0';
-                        setTimeout(() => toast.remove(), 500);
-                    }, 3000);
+                    setTimeout(() => { toast.remove(); }, 3500);
                 },
                 updateFilter: (key, value) => {
                     state.filters[key] = value;
-                    render(); // Re-render browse section
+                    render();
+                },
+                handleImageUpload: (input) => {
+                    return new Promise((resolve, reject) => {
+                        const file = input.files[0];
+                        if (!file) return resolve(null);
+                        if (file.size > 500 * 1024) return reject("حجم الصورة يجب أن يكون أقل من 500 كيلوبايت");
+                        
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    });
+                }
+            },
+            auth: {
+                signInGoogle: async () => {
+                    try {
+                        const provider = new GoogleAuthProvider();
+                        await signInWithPopup(auth, provider);
+                        // Auth listener will handle the rest
+                    } catch (error) {
+                        console.error(error);
+                        window.app.ui.showToast('error', 'فشل تسجيل الدخول عبر Google. حاول مرة أخرى.');
+                    }
+                },
+                logout: async () => {
+                    await signOut(auth);
+                    state.profile = null;
+                    window.app.router.navigate('home');
+                },
+                setRole: async (role, name, shelterDetails = {}) => {
+                    if(!state.user) return;
+                    const userData = {
+                        role: role,
+                        name: name,
+                        email: state.user.email,
+                        createdAt: serverTimestamp(),
+                        ...shelterDetails
+                    };
+                    await setDoc(doc(db, 'artifacts', appId, 'users', state.user.uid, 'profile', 'main'), userData);
+                    state.profile = userData;
+                    window.app.ui.showToast('success', `مرحباً بك كـ ${role === 'shelter' ? 'ملجأ' : 'متبني'}`);
+                    window.app.router.navigate(role === 'shelter' ? 'dashboard' : 'browse');
                 }
             },
             actions: {
-                submitAdoption: async (e) => {
-                    e.preventDefault();
-                    if(!state.user || !state.selectedCat) return;
-
-                    const form = e.target;
-                    const formData = {
-                        name: form.name.value,
-                        phone: form.phone.value,
-                        experience: form.experience.value,
-                        housing: form.housing.value
-                    };
-
-                    try {
-                        const submitBtn = form.querySelector('button[type="submit"]');
-                        const originalText = submitBtn.innerHTML;
-                        submitBtn.disabled = true;
-                        submitBtn.innerHTML = 'جاري الإرسال...';
-
-                        await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'adoption_requests'), {
-                            catId: state.selectedCat.id,
-                            catName: state.selectedCat.name,
-                            applicantId: state.user.uid,
-                            ...formData,
-                            status: 'pending',
-                            createdAt: serverTimestamp()
-                        });
-
-                        app.ui.showToast('success', 'تم إرسال طلب التبني بنجاح!');
-                        setTimeout(() => {
-                            app.router.navigate('browse');
-                        }, 2000);
-
-                    } catch (error) {
-                        console.error(error);
-                        app.ui.showToast('error', 'حدث خطأ، حاول مرة أخرى');
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = originalText;
-                    }
-                },
                 addCat: async (e) => {
                     e.preventDefault();
-                    if(!state.user) return;
-
                     const form = e.target;
-                    const catData = {
-                        name: form.name.value,
-                        age: form.age.value,
-                        governorate: form.governorate.value,
-                        gender: form.querySelector('input[name="gender"]:checked').value,
-                        image: form.image.value,
-                        description: form.description.value,
-                        vaccinated: form.vaccinated.checked,
-                        sterilized: form.sterilized.checked,
-                        health_notes: form.health_notes.value,
-                        userId: state.user.uid,
-                        createdAt: serverTimestamp(),
-                        adopted: false
-                    };
-
+                    const btn = form.querySelector('button[type="submit"]');
+                    
                     try {
-                        const submitBtn = form.querySelector('button[type="submit"]');
-                        submitBtn.disabled = true;
-                        submitBtn.textContent = 'جاري النشر...';
+                        btn.disabled = true;
+                        btn.textContent = 'جاري الرفع...';
+
+                        // Handle Image
+                        const imageInput = form.imageFile;
+                        let imageData = null;
+                        try {
+                            imageData = await window.app.ui.handleImageUpload(imageInput);
+                        } catch(err) {
+                            window.app.ui.showToast('error', err);
+                            btn.disabled = false;
+                            btn.textContent = 'نشر';
+                            return;
+                        }
+
+                        if(!imageData && !form.imageUrl.value) {
+                             window.app.ui.showToast('error', 'يرجى رفع صورة أو وضع رابط');
+                             btn.disabled = false;
+                             btn.textContent = 'نشر';
+                             return;
+                        }
+
+                        const catData = {
+                            name: form.name.value,
+                            age: form.age.value,
+                            governorate: form.governorate.value,
+                            gender: form.querySelector('input[name="gender"]:checked').value,
+                            image: imageData || form.imageUrl.value,
+                            description: form.description.value,
+                            
+                            // Medical
+                            vaccinated: form.vaccinated.checked,
+                            vaccine_details: form.vaccine_details.value,
+                            sterilized: form.sterilized.checked,
+                            health_notes: form.health_notes.value,
+                            medical_history: form.medical_history.value,
+                            
+                            userId: state.user.uid,
+                            shelterName: state.profile.name,
+                            shelterPhone: state.profile.phone,
+                            
+                            createdAt: serverTimestamp(),
+                            adopted: false
+                        };
 
                         await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'cats'), catData);
-                        
-                        app.ui.showToast('success', 'تم إضافة القط بنجاح!');
+                        window.app.ui.showToast('success', 'تم إضافة القط بنجاح!');
                         form.reset();
-                        app.router.navigate('browse');
+                        window.app.router.navigate('dashboard'); // Redirect to dashboard
                     } catch (error) {
                         console.error(error);
-                        app.ui.showToast('error', 'حدث خطأ في الإضافة');
-                        const submitBtn = form.querySelector('button[type="submit"]');
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'نشر الإعلان';
+                        window.app.ui.showToast('error', 'حدث خطأ');
+                        btn.disabled = false;
+                        btn.textContent = 'نشر';
                     }
+                },
+                submitAdoption: async (e) => {
+                    e.preventDefault();
+                    if(!state.profile || state.profile.role !== 'adopter') {
+                        window.app.ui.showToast('error', 'يجب أن يكون لديك حساب متبني لإرسال طلب');
+                        return;
+                    }
+                    // ... (Logic similar to previous, but using profile data)
+                    const form = e.target;
+                    await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'adoption_requests'), {
+                        catId: state.selectedCat.id,
+                        applicantId: state.user.uid,
+                        applicantName: state.profile.name,
+                        applicantPhone: form.phone.value,
+                        housing: form.housing.value,
+                        experience: form.experience.value,
+                        status: 'pending',
+                        createdAt: serverTimestamp()
+                    });
+                    window.app.ui.showToast('success', 'تم إرسال الطلب للملجأ');
+                    window.app.router.navigate('browse');
                 }
             }
         };
 
-        // --- Render Functions ---
+        // --- Components / HTML Generators ---
 
-        function getFilteredCats() {
-            return state.cats.filter(cat => {
-                const matchesSearch = cat.name.toLowerCase().includes(state.filters.search.toLowerCase());
-                const matchesGov = state.filters.governorate ? cat.governorate === state.filters.governorate : true;
-                const matchesGender = state.filters.gender ? cat.gender === state.filters.gender : true;
-                return matchesSearch && matchesGov && matchesGender;
-            });
-        }
+        function NavbarHTML() {
+            const isShelter = state.profile?.role === 'shelter';
+            const isAdopter = state.profile?.role === 'adopter';
+            const isLoggedIn = !!state.user;
 
-        function CatCardHTML(cat) {
-            // Escape cat object for onclick safely
-            // Note: passing ID and finding in state is safer than serializing object in HTML
-            return `
-                <div onclick="window.app.router.navigate('cat-details', window.getCachedCat('${cat.id}'))" class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden border border-gray-100 group h-full flex flex-col animate-fade-in">
-                    <div class="relative h-64 overflow-hidden bg-gray-100">
-                        <img src="${cat.image || 'https://placehold.co/400x300/orange/white?text=No+Image'}" 
-                             alt="${cat.name}" 
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                             onerror="this.src='https://placehold.co/400x300/orange/white?text=صورة+بديلة'">
-                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-orange-600 flex items-center gap-1 shadow-sm">
-                            <i data-lucide="map-pin" class="w-3 h-3"></i> ${cat.governorate}
-                        </div>
-                    </div>
-                    <div class="p-5 flex-grow flex flex-col">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold text-gray-800">${cat.name}</h3>
-                            <span class="px-2 py-1 rounded-md text-xs font-medium ${cat.gender === 'ذكر' ? 'bg-blue-100 text-blue-600' : 'bg-pink-100 text-pink-600'}">
-                                ${cat.gender}
-                            </span>
-                        </div>
-                        <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                            <span class="flex items-center gap-1"><i data-lucide="activity" class="w-3 h-3"></i> ${cat.age}</span>
-                            <span class="flex items-center gap-1"><i data-lucide="home" class="w-3 h-3"></i> ${cat.housing_type || 'منزلي'}</span>
-                        </div>
-                        <div class="mt-auto">
-                            <button class="w-full py-2.5 bg-orange-50 text-orange-600 font-bold rounded-xl hover:bg-orange-100 transition-colors flex items-center justify-center gap-2">
-                                تفاصيل أكثر <i data-lucide="cat" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            let links = `
+                <button onclick="app.router.navigate('home')" class="font-bold text-gray-600 hover:text-orange-600">الرئيسية</button>
+                <button onclick="app.router.navigate('browse')" class="font-bold text-gray-600 hover:text-orange-600">تصفح القطط</button>
             `;
-        }
-
-        // Helper to retrieve cat object from ID for event handlers
-        window.getCachedCat = (id) => state.cats.find(c => c.id === id);
-
-        function renderHero() {
-            const latestCats = state.cats.slice(0, 3);
-            let catsGridHTML = '';
             
-            if (state.loading) {
-                catsGridHTML = '<div class="col-span-3 text-center text-gray-400">جاري التحميل...</div>';
-            } else if (latestCats.length === 0) {
-                catsGridHTML = '<div class="col-span-3 text-center py-12 bg-gray-50 rounded-2xl border border-dashed border-gray-200"><p class="text-gray-500">لا توجد قطط مضافة حالياً...</p></div>';
-            } else {
-                catsGridHTML = latestCats.map(CatCardHTML).join('');
+            if (isShelter) {
+                links += `<button onclick="app.router.navigate('dashboard')" class="font-bold text-orange-600">لوحة التحكم</button>`;
             }
 
+            let authBtns = '';
+            if (!isLoggedIn) {
+                authBtns = `
+                    <button onclick="app.router.navigate('login')" class="text-gray-600 font-bold hover:text-gray-800">دخول</button>
+                    <button onclick="app.router.navigate('signup')" class="bg-orange-600 text-white px-5 py-2 rounded-xl font-bold shadow-lg hover:bg-orange-700 transition">انضم إلينا</button>
+                `;
+            } else {
+                authBtns = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-bold bg-gray-100 px-3 py-1 rounded-full">${state.profile?.name || 'مستخدم'}</span>
+                        <button onclick="app.auth.logout()" class="text-red-500 text-sm font-bold hover:bg-red-50 px-3 py-1 rounded-lg">خروج</button>
+                    </div>
+                `;
+            }
+
+            // Inject
+            document.getElementById('desktop-menu').innerHTML = links;
+            document.getElementById('auth-section').innerHTML = authBtns;
+            
+            // Mobile
+            document.getElementById('mobile-menu').innerHTML = `
+                ${links}
+                <hr class="my-2">
+                ${!isLoggedIn ? `<button onclick="app.router.navigate('login'); app.ui.toggleMobileMenu()" class="text-right w-full p-2 font-bold">تسجيل دخول</button>` : `<button onclick="app.auth.logout()" class="text-right w-full p-2 font-bold text-red-500">خروج</button>`}
+            `;
+        }
+
+        function renderHero() {
+            // Live Stats
+            const catCount = state.cats.length;
+            const shelterCount = new Set(state.cats.map(c => c.userId)).size;
+
             return `
-                <div class="relative bg-orange-50/50 overflow-hidden">
-                    <div class="max-w-7xl mx-auto px-4 py-12 md:py-20 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center gap-12">
-                        <div class="w-full md:w-1/2 space-y-8 text-right z-10 animate-fade-in">
-                            <h1 class="text-4xl md:text-6xl font-black text-gray-900 leading-tight">
-                                لا تشتري، <br/><span class="text-transparent bg-clip-text bg-gradient-to-l from-orange-600 to-amber-500">تبنى سعادة.</span>
+                <div class="relative bg-orange-50/50 overflow-hidden animate-fade-in">
+                    <div class="max-w-7xl mx-auto px-4 py-16 flex flex-col-reverse md:flex-row items-center gap-12">
+                        <div class="w-full md:w-1/2 space-y-8 text-right z-10">
+                            <h1 class="text-5xl font-black text-gray-900 leading-tight">
+                                كل قطة تستحق <span class="text-orange-600">منزلاً دافئاً</span>
                             </h1>
-                            <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg">
-                                "ملاذ" هي منصتك الأولى لتبني القطط في مصر. نحن هنا لنجمع بين القلوب الرحيمة والقطط التي تبحث عن فرصة ثانية.
+                            <p class="text-xl text-gray-600 leading-relaxed max-w-lg">
+                                منصة "ملاذ" تربطك مباشرة بالملاجئ الموثوقة. تصفح ملفات القطط الطبية، وتعرف عليها، وامنحها فرصة ثانية.
                             </p>
-                            <div class="flex flex-wrap gap-4 pt-4">
-                                <button onclick="app.router.navigate('browse')" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 shadow-lg shadow-orange-200 hover:shadow-orange-300">
-                                    <i data-lucide="search" class="w-5 h-5"></i> ابحث عن صديق
+                            <div class="flex gap-4 pt-4">
+                                <button onclick="app.router.navigate('browse')" class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-2xl font-bold shadow-xl shadow-orange-200 hover:shadow-orange-300 transition-all transform hover:-translate-y-1">
+                                    <i data-lucide="search" class="inline w-5 h-5 ml-2"></i> أريد التبني
                                 </button>
-                                <button onclick="app.router.navigate('add-cat')" class="bg-white text-gray-700 border-2 border-gray-200 px-6 py-3 rounded-xl font-bold hover:border-orange-600 hover:text-orange-600 transition-all shadow-sm hover:shadow-md">
-                                    تسجيل ملجأ
+                                <button onclick="app.router.navigate('signup')" class="bg-white text-gray-700 border-2 border-gray-200 px-8 py-4 rounded-2xl font-bold hover:border-orange-600 hover:text-orange-600 transition-all">
+                                    سجل كملجأ
                                 </button>
                             </div>
-                            <div class="flex gap-8 pt-8 border-t border-orange-200/50 mt-8">
-                                <div><p class="text-3xl font-black text-gray-800">150+</p><p class="text-sm text-gray-500 font-medium">قط ينتظر</p></div>
-                                <div><p class="text-3xl font-black text-gray-800">20+</p><p class="text-sm text-gray-500 font-medium">ملجأ مسجل</p></div>
+                            <div class="flex gap-10 pt-8 border-t border-orange-200/50 mt-8">
+                                <div><p class="text-4xl font-black text-gray-800">${catCount}</p><p class="text-sm text-gray-500 font-bold">قطة تنتظر</p></div>
+                                <div><p class="text-4xl font-black text-gray-800">${shelterCount}</p><p class="text-sm text-gray-500 font-bold">ملجأ مسجل</p></div>
                             </div>
                         </div>
-                        <div class="w-full md:w-1/2 relative">
-                            <div class="absolute inset-0 bg-orange-200 rounded-full filter blur-3xl opacity-30 transform translate-x-10 translate-y-10 animate-pulse"></div>
-                            <img src="https://images.unsplash.com/photo-1519052537078-e6302a4968ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="relative z-10 rounded-3xl shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500 w-full object-cover h-[350px] md:h-[500px]">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="py-20 bg-white">
-                    <div class="max-w-7xl mx-auto px-4">
-                        <div class="flex justify-between items-end mb-12">
-                           <div>
-                             <h2 class="text-3xl font-black text-gray-900 mb-2">أحدث الأصدقاء المنضمين</h2>
-                             <p class="text-gray-500">قطط وصلت حديثاً للملاجئ وتبحث عنك</p>
-                           </div>
-                           <button onclick="app.router.navigate('browse')" class="hidden md:flex items-center gap-2 text-orange-600 font-bold hover:gap-4 transition-all">
-                             عرض الكل <span>←</span>
-                           </button>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                           ${catsGridHTML}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Steps Section -->
-                <div class="py-20 bg-orange-900 text-white overflow-hidden relative">
-                   <div class="max-w-7xl mx-auto px-4 relative z-10">
-                     <h2 class="text-3xl font-black text-center mb-16">كيف تتبنى صديقك الجديد؟</h2>
-                     <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-                        <div class="relative">
-                           <div class="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl font-black shadow-lg shadow-orange-900/50">1</div>
-                           <h3 class="text-xl font-bold mb-4">اختر قطك المفضل</h3>
-                           <p class="text-orange-200 leading-relaxed">تصفح صور القطط، اقرأ عن شخصياتها وحالتها الصحية.</p>
-                        </div>
-                        <div class="relative">
-                           <div class="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl font-black shadow-lg shadow-orange-900/50">2</div>
-                           <h3 class="text-xl font-bold mb-4">أرسل طلب التبني</h3>
-                           <p class="text-orange-200 leading-relaxed">املأ نموذجاً بسيطاً بمعلوماتك لنتأكد من أن القط في أيد أمينة.</p>
-                        </div>
-                        <div class="relative">
-                           <div class="w-20 h-20 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl font-black shadow-lg shadow-orange-900/50">3</div>
-                           <h3 class="text-xl font-bold mb-4">لقاء الصديق</h3>
-                           <p class="text-orange-200 leading-relaxed">سيقوم الملجأ بالتواصل معك لترتيب موعد لاستلام القط.</p>
-                        </div>
-                     </div>
-                   </div>
-                </div>
-            `;
-        }
-
-        function renderBrowse() {
-            const filtered = getFilteredCats();
-            const governorateOptions = GOVERNORATES.map(g => 
-                `<option value="${g}" ${state.filters.governorate === g ? 'selected' : ''}>${g}</option>`
-            ).join('');
-
-            return `
-                <div class="max-w-7xl mx-auto px-4 py-8 md:py-12 sm:px-6 lg:px-8 bg-gray-50 min-h-screen">
-                    <div class="flex flex-col md:flex-row gap-8">
-                        <!-- Sidebar -->
-                        <div class="w-full md:w-1/4 space-y-6">
-                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
-                                <div class="flex items-center gap-2 mb-6 border-b pb-4">
-                                    <i data-lucide="filter" class="text-orange-600"></i>
-                                    <h2 class="text-xl font-bold text-gray-800">تصفية البحث</h2>
-                                </div>
-                                
-                                <div class="space-y-6">
-                                    <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">اسم القط</label>
-                                        <div class="relative">
-                                            <input type="text" placeholder="ابحث بالاسم..." 
-                                                class="w-full pl-4 pr-10 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition-all"
-                                                value="${state.filters.search}"
-                                                oninput="app.ui.updateFilter('search', this.value)">
-                                            <i data-lucide="search" class="absolute left-3 top-3.5 text-gray-400 w-4 h-4"></i>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">المحافظة</label>
-                                        <div class="relative">
-                                            <select onchange="app.ui.updateFilter('governorate', this.value)"
-                                                class="w-full pr-10 py-3 rounded-xl border border-gray-200 focus:border-orange-500 outline-none bg-white appearance-none cursor-pointer">
-                                                <option value="">كل المحافظات</option>
-                                                ${governorateOptions}
-                                            </select>
-                                            <i data-lucide="map-pin" class="absolute left-3 top-3.5 text-gray-400 w-4 h-4 pointer-events-none"></i>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-sm font-bold text-gray-700 mb-2">الجنس</label>
-                                        <div class="flex bg-gray-100 p-1 rounded-xl">
-                                            <button onclick="app.ui.updateFilter('gender', 'ذكر')" class="flex-1 py-2 rounded-lg text-sm font-medium transition-all ${state.filters.gender === 'ذكر' ? 'bg-white text-orange-600 shadow-sm' : 'text-gray-500'}">ذكر</button>
-                                            <button onclick="app.ui.updateFilter('gender', 'أنثى')" class="flex-1 py-2 rounded-lg text-sm font-medium transition-all ${state.filters.gender === 'أنثى' ? 'bg-white text-orange-600 shadow-sm' : 'text-gray-500'}">أنثى</button>
-                                            <button onclick="app.ui.updateFilter('gender', '')" class="flex-1 py-2 rounded-lg text-sm font-medium transition-all ${state.filters.gender === '' ? 'bg-white text-orange-600 shadow-sm' : 'text-gray-500'}">الكل</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Grid -->
-                        <div class="w-full md:w-3/4">
-                            <h2 class="text-2xl font-bold text-gray-800 mb-6">القطط المتاحة (${filtered.length})</h2>
-                            ${state.loading ? 
-                                '<div class="flex justify-center h-64"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div></div>' 
-                                : 
-                                (filtered.length > 0 ? 
-                                    `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${filtered.map(CatCardHTML).join('')}</div>`
-                                    :
-                                    `<div class="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300">
-                                        <div class="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"><i data-lucide="cat" class="w-10 h-10 text-gray-400"></i></div>
-                                        <h3 class="text-xl font-bold text-gray-800 mb-2">لا توجد نتائج</h3>
-                                        <button onclick="app.ui.updateFilter('search', ''); app.ui.updateFilter('governorate', ''); app.ui.updateFilter('gender', '')" class="text-orange-600 underline">إعادة تعيين الفلاتر</button>
-                                     </div>`
-                                )
-                            }
+                        <div class="w-full md:w-1/2">
+                            <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="rounded-[3rem] shadow-2xl rotate-3 hover:rotate-0 transition-all duration-700 object-cover h-[500px] w-full border-4 border-white">
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        function renderCatDetails() {
-            if (!state.selectedCat) return renderBrowse(); // Fallback
-            const cat = state.selectedCat;
-
+        function renderLogin() {
             return `
-                <div class="max-w-5xl mx-auto px-4 py-8 md:py-12 bg-white min-h-screen animate-fade-in">
-                    <button onclick="app.router.navigate('browse')" class="mb-6 flex items-center gap-2 text-gray-500 hover:text-orange-600 transition-colors font-medium">
-                        <span class="text-xl">←</span> العودة للقائمة
-                    </button>
-                    
-                    <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100">
-                        <div class="grid grid-cols-1 md:grid-cols-2">
-                           <!-- Image -->
-                           <div class="h-[400px] md:h-full relative bg-gray-100">
-                              <img src="${cat.image || 'https://placehold.co/600x600/orange/white?text=صورة+القط'}" 
-                                   alt="${cat.name}" class="w-full h-full object-cover" 
-                                   onerror="this.src='https://placehold.co/600x600/orange/white?text=صورة+القط'">
-                              <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-bold text-gray-800 shadow-sm flex items-center gap-1">
-                                <i data-lucide="map-pin" class="w-4 h-4 text-orange-500"></i> ${cat.governorate}
-                              </div>
-                           </div>
+                <div class="min-h-[80vh] flex items-center justify-center p-4 animate-fade-in">
+                    <div class="bg-white p-8 rounded-3xl shadow-xl max-w-md w-full border border-gray-100">
+                        <div class="text-center mb-8">
+                            <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="log-in" class="w-8 h-8 text-orange-600"></i>
+                            </div>
+                            <h2 class="text-3xl font-black text-gray-800">مرحباً بعودتك</h2>
+                            <p class="text-gray-500 mt-2">سجل دخولك للمتابعة</p>
+                        </div>
+                        
+                        <button onclick="app.auth.signInGoogle()" class="w-full bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-800 font-bold py-4 rounded-xl flex items-center justify-center gap-3 transition-all mb-4">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                            استمرار باستخدام Google
+                        </button>
+                        
+                        <p class="text-center text-sm text-gray-400">نحن نستخدم حساب Google للتحقق من هويتك بأمان.</p>
+                    </div>
+                </div>
+            `;
+        }
 
-                           <!-- Content -->
-                           <div class="p-8 md:p-10 flex flex-col h-full">
-                              <div class="mb-6">
-                                 <h1 class="text-4xl font-black text-gray-800 mb-2">${cat.name}</h1>
-                                 <div class="flex items-center gap-3 text-gray-500">
-                                   <span class="bg-gray-100 px-3 py-1 rounded-lg text-sm">${cat.age}</span>
-                                   <span class="px-3 py-1 rounded-lg text-sm ${cat.gender === 'ذكر' ? 'bg-blue-50 text-blue-600' : 'bg-pink-50 text-pink-600'}">${cat.gender}</span>
-                                 </div>
-                              </div>
+        function renderRoleSelection() {
+            return `
+                <div class="min-h-[80vh] flex items-center justify-center p-4 animate-fade-in">
+                    <div class="max-w-2xl w-full">
+                        <div class="text-center mb-10">
+                            <h2 class="text-4xl font-black text-gray-800 mb-4">أكمل ملفك الشخصي</h2>
+                            <p class="text-xl text-gray-600">كيف تود استخدام منصة ملاذ؟</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Adopter Option -->
+                            <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-transparent hover:border-orange-500 cursor-pointer transition-all group" onclick="document.getElementById('role-adopter-form').classList.remove('hidden'); document.getElementById('role-shelter-form').classList.add('hidden');">
+                                <div class="bg-blue-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="heart" class="w-8 h-8 text-blue-600"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-2">أريد التبني</h3>
+                                <p class="text-gray-500">أبحث عن صديق أليف لأضمه لعائلتي.</p>
+                            </div>
 
-                              <div class="prose prose-orange max-w-none mb-8">
-                                 <h3 class="text-lg font-bold text-gray-900 mb-2">عني</h3>
-                                 <p class="text-gray-600 leading-relaxed">${cat.description || "لا يوجد وصف متاح."}</p>
-                              </div>
+                            <!-- Shelter Option -->
+                            <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-transparent hover:border-orange-500 cursor-pointer transition-all group" onclick="document.getElementById('role-shelter-form').classList.remove('hidden'); document.getElementById('role-adopter-form').classList.add('hidden');">
+                                <div class="bg-green-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                    <i data-lucide="home" class="w-8 h-8 text-green-600"></i>
+                                </div>
+                                <h3 class="text-2xl font-bold mb-2">أنا ملجأ / منقذ</h3>
+                                <p class="text-gray-500">لدي قطط أريد عرضها للتبني.</p>
+                            </div>
+                        </div>
 
-                              <div class="bg-blue-50 p-6 rounded-2xl mb-8">
-                                 <h3 class="text-blue-900 font-bold mb-4 flex items-center gap-2"><i data-lucide="stethoscope" class="w-5 h-5"></i> الحالة الطبية</h3>
-                                 <div class="space-y-3">
-                                    <div class="flex items-center gap-3">
-                                       <i data-lucide="check-circle" class="w-5 h-5 ${cat.vaccinated ? 'text-green-600' : 'text-gray-300'}"></i>
-                                       <span class="text-gray-700">التطعيمات: <span class="font-bold">${cat.vaccinated ? 'كاملة' : 'غير مكتملة'}</span></span>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                       <i data-lucide="check-circle" class="w-5 h-5 ${cat.sterilized ? 'text-green-600' : 'text-gray-300'}"></i>
-                                       <span class="text-gray-700">التعقيم: <span class="font-bold">${cat.sterilized ? 'تم التعقيم' : 'لم يتم'}</span></span>
-                                    </div>
-                                 </div>
-                                 ${cat.health_notes ? `<div class="mt-4 pt-4 border-t border-blue-100 text-sm text-blue-800"><span class="font-bold">ملاحظات:</span> ${cat.health_notes}</div>` : ''}
-                              </div>
+                        <!-- Forms (Initially Hidden) -->
+                        <div id="role-adopter-form" class="hidden mt-8 bg-white p-8 rounded-3xl shadow-xl animate-fade-in">
+                            <h3 class="font-bold text-lg mb-4">بيانات المتبني</h3>
+                            <input type="text" id="adopter-name" placeholder="اسمك الكامل" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
+                            <button onclick="app.auth.setRole('adopter', document.getElementById('adopter-name').value)" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700">إنشاء حساب متبني</button>
+                        </div>
 
-                              <div class="mt-auto pt-6 border-t border-gray-100">
-                                 <h3 class="font-bold text-lg mb-4 text-gray-800">نموذج طلب التبني</h3>
-                                 <form onsubmit="app.actions.submitAdoption(event)" class="space-y-3">
-                                    <div class="grid grid-cols-2 gap-3">
-                                        <input required name="name" type="text" placeholder="الاسم الكامل" class="w-full p-3 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all">
-                                        <input required name="phone" type="tel" placeholder="رقم الموبايل" class="w-full p-3 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all">
-                                    </div>
-                                    <select name="housing" class="w-full p-3 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all">
-                                        <option value="apartment">شقة</option>
-                                        <option value="house">فيلا / بيت مستقل</option>
-                                    </select>
-                                    <textarea name="experience" required placeholder="خبرتك السابقة مع القطط..." class="w-full p-3 bg-gray-50 rounded-xl border-transparent focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all h-20 resize-none"></textarea>
-                                    
-                                    <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-orange-200">
-                                        <i data-lucide="heart" class="w-5 h-5"></i> إرسال الطلب للملجأ
-                                    </button>
-                                    <p class="text-xs text-gray-400 text-center">بإرسال الطلب أنت توافق على شروط التبني.</p>
-                                 </form>
-                              </div>
-                           </div>
+                        <div id="role-shelter-form" class="hidden mt-8 bg-white p-8 rounded-3xl shadow-xl animate-fade-in">
+                            <h3 class="font-bold text-lg mb-4">بيانات الملجأ</h3>
+                            <input type="text" id="shelter-name" placeholder="اسم الملجأ" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 mb-4 focus:ring-2 focus:ring-green-500 outline-none">
+                            <input type="tel" id="shelter-phone" placeholder="رقم الهاتف للتواصل" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 mb-4 focus:ring-2 focus:ring-green-500 outline-none">
+                            <input type="text" id="shelter-location" placeholder="العنوان التفصيلي" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 mb-4 focus:ring-2 focus:ring-green-500 outline-none">
+                            <button onclick="app.auth.setRole('shelter', document.getElementById('shelter-name').value, {phone: document.getElementById('shelter-phone').value, address: document.getElementById('shelter-location').value})" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl hover:bg-green-700">إنشاء حساب ملجأ</button>
                         </div>
                     </div>
+                </div>
+            `;
+        }
+
+        function renderShelterDashboard() {
+            if(!state.user || state.profile?.role !== 'shelter') return renderLogin();
+            
+            const myCats = state.cats.filter(c => c.userId === state.user.uid);
+            
+            return `
+                <div class="max-w-7xl mx-auto px-4 py-10 animate-fade-in">
+                    <div class="flex justify-between items-center mb-8">
+                        <div>
+                            <h1 class="text-3xl font-black text-gray-800">لوحة تحكم الملجأ</h1>
+                            <p class="text-gray-500">أهلاً بك، ${state.profile.name}</p>
+                        </div>
+                        <button onclick="app.router.navigate('add-cat')" class="bg-orange-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-700 flex items-center gap-2">
+                            <i data-lucide="plus"></i> إضافة قط جديد
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-gray-500 text-sm font-bold">قططك المعروضة</p>
+                            <p class="text-3xl font-black text-orange-600">${myCats.length}</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-gray-500 text-sm font-bold">طلبات التبني</p>
+                            <p class="text-3xl font-black text-blue-600">0</p>
+                            <p class="text-xs text-gray-400 mt-1">(قريباً)</p>
+                        </div>
+                    </div>
+
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">قائمتك الحالية</h2>
+                    ${myCats.length === 0 ? 
+                        `<div class="text-center py-12 bg-white rounded-2xl border border-dashed border-gray-300">
+                            <p class="text-gray-400 mb-4">لم تضف أي قطط بعد</p>
+                            <button onclick="app.router.navigate('add-cat')" class="text-orange-600 font-bold underline">إضافة أول قط</button>
+                        </div>` 
+                        : 
+                        `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${myCats.map(cat => `
+                                <div class="bg-white p-4 rounded-2xl shadow-sm flex gap-4 items-center">
+                                    <img src="${cat.image}" class="w-20 h-20 rounded-xl object-cover bg-gray-100">
+                                    <div>
+                                        <h3 class="font-bold">${cat.name}</h3>
+                                        <p class="text-sm text-gray-500">${cat.views || 0} مشاهدة</p>
+                                    </div>
+                                    <div class="mr-auto">
+                                        <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded-lg">نشط</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>`
+                    }
                 </div>
             `;
         }
 
         function renderAddCat() {
-            const governorateOptions = GOVERNORATES.map(g => `<option value="${g}">${g}</option>`).join('');
-            
+            if(!state.user || state.profile?.role !== 'shelter') return renderLogin();
+
             return `
                 <div class="max-w-3xl mx-auto px-4 py-12 animate-fade-in">
                     <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-                        <div class="bg-orange-600 p-8 text-center">
-                           <h2 class="text-3xl font-black text-white mb-2 flex justify-center items-center gap-2">
-                             <i data-lucide="plus-circle" class="w-8 h-8 text-white/80"></i> إضافة قط جديد
-                           </h2>
-                           <p class="text-orange-100">ساعد قطاً آخراً في العثور على منزل دافئ</p>
+                        <div class="bg-orange-600 p-8 text-center text-white">
+                           <h2 class="text-3xl font-black mb-2">إضافة قط جديد</h2>
+                           <p class="opacity-90">املأ البيانات بدقة لتسريع عملية التبني</p>
                         </div>
                         
                         <form onsubmit="app.actions.addCat(event)" class="p-8 space-y-8">
+                          <!-- Image Upload -->
+                          <div class="text-center">
+                                <div class="relative w-full h-48 bg-gray-100 rounded-2xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition overflow-hidden group">
+                                    <input type="file" name="imageFile" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer z-10" onchange="const p = this.parentElement.querySelector('img'); const t = this.parentElement.querySelector('div'); const f = this.files[0]; if(f){const r=new FileReader();r.onload=e=>{p.src=e.target.result;p.classList.remove('hidden');t.classList.add('hidden')};r.readAsDataURL(f);}">
+                                    <div class="text-gray-400 group-hover:text-orange-500 transition">
+                                        <i data-lucide="image-plus" class="w-10 h-10 mx-auto mb-2"></i>
+                                        <p class="font-bold text-sm">اضغط لرفع صورة القط</p>
+                                        <p class="text-xs mt-1">PNG, JPG حتى 500KB</p>
+                                    </div>
+                                    <img class="absolute inset-0 w-full h-full object-cover hidden">
+                                </div>
+                                <div class="mt-2 text-xs text-gray-400 font-bold">أو</div>
+                                <input type="url" name="imageUrl" placeholder="أو ضع رابط صورة مباشر هنا..." class="w-full mt-2 p-3 rounded-xl border border-gray-200 text-sm">
+                          </div>
+
                           <!-- Basic Info -->
-                          <section>
-                            <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">البيانات الأساسية</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              <div>
+                          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">اسم القط</label>
                                 <input required name="name" type="text" class="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-orange-500 transition-colors">
-                              </div>
-                              <div>
+                            </div>
+                            <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">العمر</label>
-                                <input required name="age" type="text" placeholder="مثال: 6 شهور" class="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-orange-500 transition-colors">
-                              </div>
-                              <div>
+                                <input required name="age" type="text" placeholder="مثال: سنتين" class="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-orange-500 transition-colors">
+                            </div>
+                            <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">المحافظة</label>
-                                <select name="governorate" class="w-full p-3 rounded-xl border border-gray-200 outline-none bg-white focus:border-orange-500 transition-colors">
-                                  ${governorateOptions}
+                                <select name="governorate" class="w-full p-3 rounded-xl border border-gray-200 bg-white">
+                                    ${GOVERNORATES.map(g => `<option value="${g}">${g}</option>`).join('')}
                                 </select>
-                              </div>
-                              <div>
+                            </div>
+                            <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">الجنس</label>
                                 <div class="flex gap-4">
                                   <label class="flex-1 cursor-pointer border rounded-xl p-3 flex items-center justify-center gap-2 border-gray-200 hover:bg-orange-50">
@@ -630,47 +567,42 @@
                                     <input type="radio" name="gender" value="أنثى" class="accent-orange-600"> أنثى
                                   </label>
                                 </div>
-                              </div>
                             </div>
-                          </section>
+                          </div>
 
-                          <!-- Details -->
-                          <section>
-                             <h3 class="text-lg font-bold text-gray-800 mb-4 border-b pb-2">التفاصيل</h3>
-                             <div class="space-y-4">
-                                <div>
-                                   <label class="block text-sm font-bold text-gray-700 mb-2">رابط الصورة</label>
-                                   <input name="image" type="url" placeholder="https://..." class="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-orange-500 transition-colors">
-                                   <p class="text-xs text-gray-400 mt-1">نقبل حالياً روابط صور خارجية.</p>
-                                </div>
-                                <div>
-                                  <label class="block text-sm font-bold text-gray-700 mb-2">نبذة عنه</label>
-                                  <textarea required name="description" class="w-full p-3 rounded-xl border border-gray-200 outline-none focus:border-orange-500 transition-colors h-32 resize-none" placeholder="اكتب عن طباعه، وماذا يحب..."></textarea>
-                                </div>
-                             </div>
-                          </section>
+                          <!-- Description -->
+                          <div>
+                             <label class="block text-sm font-bold text-gray-700 mb-2">قصته وشخصيته</label>
+                             <textarea required name="description" class="w-full p-3 rounded-xl border border-gray-200 outline-none h-24 resize-none" placeholder="اكتب وصفاً جذاباً..."></textarea>
+                          </div>
 
-                          <!-- Health -->
-                          <section class="bg-gray-50 p-6 rounded-2xl">
-                             <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                               <i data-lucide="activity" class="w-5 h-5 text-gray-500"></i> المعلومات الطبية
+                          <!-- Medical History -->
+                          <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                             <h3 class="text-lg font-bold text-blue-900 mb-4 flex items-center gap-2">
+                               <i data-lucide="file-heart"></i> السجل الطبي
                              </h3>
-                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                                <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-200 cursor-pointer">
-                                  <input type="checkbox" name="vaccinated" class="w-5 h-5 accent-orange-600 rounded">
-                                  <span class="font-medium">تم أخذ التطعيمات</span>
+                             
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-blue-200 cursor-pointer">
+                                  <input type="checkbox" name="vaccinated" class="w-5 h-5 accent-blue-600 rounded">
+                                  <span class="font-medium">تم التطعيم</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-200 cursor-pointer">
-                                  <input type="checkbox" name="sterilized" class="w-5 h-5 accent-orange-600 rounded">
-                                  <span class="font-medium">تم التعقيم</span>
+                                <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-blue-200 cursor-pointer">
+                                  <input type="checkbox" name="sterilized" class="w-5 h-5 accent-blue-600 rounded">
+                                  <span class="font-medium">تم التعقيم (Spayed/Neutered)</span>
                                 </label>
                              </div>
-                             <input type="text" name="health_notes" placeholder="ملاحظات طبية أخرى..." class="w-full p-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-orange-500">
-                          </section>
+
+                             <div class="space-y-4">
+                                <input type="text" name="vaccine_details" placeholder="أنواع التطعيمات المأخوذة (اختياري)" class="w-full p-3 bg-white border border-blue-200 rounded-xl">
+                                <textarea name="medical_history" placeholder="تاريخ مرضي أو عمليات سابقة..." class="w-full p-3 bg-white border border-blue-200 rounded-xl h-20 resize-none"></textarea>
+                                <input type="text" name="health_notes" placeholder="ملاحظات صحية حالية (يحتاج دواء معين؟)" class="w-full p-3 bg-white border border-blue-200 rounded-xl">
+                             </div>
+                          </div>
 
                           <div class="pt-4">
-                            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-xl text-lg font-bold shadow-xl shadow-orange-200 flex items-center justify-center gap-2">
-                                <i data-lucide="plus-circle" class="w-6 h-6"></i> نشر الإعلان
+                            <button type="submit" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-xl text-lg font-bold shadow-xl shadow-orange-200">
+                                نشر للإعلان
                             </button>
                           </div>
                         </form>
@@ -679,72 +611,204 @@
             `;
         }
 
-        // --- Main Render Loop ---
+        function renderBrowse() {
+            const filtered = state.cats.filter(cat => {
+                const s = state.filters.search.toLowerCase();
+                const g = state.filters.governorate;
+                const gen = state.filters.gender;
+                return cat.name.toLowerCase().includes(s) && (!g || cat.governorate === g) && (!gen || cat.gender === gen);
+            });
+
+            return `
+                <div class="max-w-7xl mx-auto px-4 py-8 bg-gray-50 min-h-screen">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <!-- Filters -->
+                        <div class="w-full md:w-1/4 space-y-6">
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-24">
+                                <div class="flex items-center gap-2 mb-6 border-b pb-4">
+                                    <i data-lucide="filter" class="text-orange-600"></i>
+                                    <h2 class="text-xl font-bold">فلترة</h2>
+                                </div>
+                                <input type="text" placeholder="بحث بالاسم..." class="w-full p-3 rounded-xl border mb-4" oninput="app.ui.updateFilter('search', this.value)">
+                                <select class="w-full p-3 rounded-xl border mb-4 bg-white" onchange="app.ui.updateFilter('governorate', this.value)">
+                                    <option value="">كل المحافظات</option>
+                                    ${GOVERNORATES.map(g => `<option value="${g}">${g}</option>`).join('')}
+                                </select>
+                                <div class="flex gap-2">
+                                    <button onclick="app.ui.updateFilter('gender', 'ذكر')" class="flex-1 border p-2 rounded-lg hover:bg-orange-50">ذكر</button>
+                                    <button onclick="app.ui.updateFilter('gender', 'أنثى')" class="flex-1 border p-2 rounded-lg hover:bg-orange-50">أنثى</button>
+                                    <button onclick="app.ui.updateFilter('gender', '')" class="flex-1 border p-2 rounded-lg hover:bg-orange-50">الكل</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid -->
+                        <div class="w-full md:w-3/4">
+                             ${state.loading ? `<div class="text-center p-10">جاري التحميل...</div>` : 
+                               (filtered.length === 0 ? `<div class="text-center p-10 bg-white rounded-xl">لا توجد نتائج</div>` : 
+                               `<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    ${filtered.map(cat => `
+                                        <div onclick="app.router.navigate('cat-details', window.getCachedCat('${cat.id}'))" class="bg-white rounded-2xl shadow-sm overflow-hidden cursor-pointer hover:shadow-xl transition group">
+                                            <div class="h-64 overflow-hidden relative">
+                                                <img src="${cat.image}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                                <div class="absolute bottom-2 right-2 bg-white/90 px-2 py-1 rounded-lg text-xs font-bold flex items-center gap-1">
+                                                    <i data-lucide="map-pin" class="w-3 h-3"></i> ${cat.governorate}
+                                                </div>
+                                            </div>
+                                            <div class="p-5">
+                                                <div class="flex justify-between items-center mb-2">
+                                                    <h3 class="font-bold text-lg">${cat.name}</h3>
+                                                    <span class="text-xs font-bold px-2 py-1 rounded bg-gray-100">${cat.gender}</span>
+                                                </div>
+                                                <p class="text-sm text-gray-500 line-clamp-2">${cat.description}</p>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                               </div>`
+                               )
+                             }
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.getCachedCat = (id) => state.cats.find(c => c.id === id);
+
+        function renderCatDetails() {
+            const cat = state.selectedCat;
+            if(!cat) return renderBrowse();
+
+            return `
+                <div class="max-w-4xl mx-auto px-4 py-10 animate-fade-in">
+                    <button onclick="app.router.navigate('browse')" class="mb-4 text-gray-500 hover:text-orange-600 font-bold">← عودة</button>
+                    
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                        <div class="h-80 md:h-96 relative">
+                            <img src="${cat.image}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+                                <div class="text-white">
+                                    <h1 class="text-4xl font-black mb-2">${cat.name}</h1>
+                                    <p class="opacity-90 flex items-center gap-4">
+                                        <span><i data-lucide="map-pin" class="inline w-4 h-4"></i> ${cat.governorate}</span>
+                                        <span><i data-lucide="activity" class="inline w-4 h-4"></i> ${cat.age}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="md:col-span-2 space-y-8">
+                                <div>
+                                    <h3 class="text-xl font-bold text-gray-800 mb-3">عن ${cat.name}</h3>
+                                    <p class="text-gray-600 leading-relaxed text-lg">${cat.description}</p>
+                                </div>
+                                
+                                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                                    <h3 class="text-lg font-bold text-blue-900 mb-4">الملف الطبي</h3>
+                                    <div class="grid grid-cols-2 gap-4 mb-4">
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="${cat.vaccinated ? 'check-circle' : 'circle'}" class="${cat.vaccinated ? 'text-green-600' : 'text-gray-400'}"></i>
+                                            <span>${cat.vaccinated ? 'مطعم' : 'غير مطعم'}</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i data-lucide="${cat.sterilized ? 'check-circle' : 'circle'}" class="${cat.sterilized ? 'text-green-600' : 'text-gray-400'}"></i>
+                                            <span>${cat.sterilized ? 'معقم' : 'غير معقم'}</span>
+                                        </div>
+                                    </div>
+                                    ${cat.vaccine_details ? `<p class="text-sm text-gray-600 mb-2"><strong>التطعيمات:</strong> ${cat.vaccine_details}</p>` : ''}
+                                    ${cat.medical_history ? `<p class="text-sm text-gray-600 mb-2"><strong>تاريخ مرضي:</strong> ${cat.medical_history}</p>` : ''}
+                                    ${cat.health_notes ? `<p class="text-sm text-blue-800 bg-blue-100 p-2 rounded"><strong>ملاحظة:</strong> ${cat.health_notes}</p>` : ''}
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded-2xl h-fit">
+                                <h3 class="text-lg font-bold mb-4">تبنى ${cat.name}</h3>
+                                ${!state.user ? 
+                                    `<button onclick="app.router.navigate('login')" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold">سجل دخول للتبني</button>` :
+                                    (state.profile?.role === 'adopter' ? 
+                                        `<form onsubmit="app.actions.submitAdoption(event)" class="space-y-3">
+                                            <input required name="phone" type="tel" placeholder="رقم هاتفك" class="w-full p-3 rounded-xl border">
+                                            <select name="housing" class="w-full p-3 rounded-xl border">
+                                                <option value="apartment">شقة</option>
+                                                <option value="villa">فيلا</option>
+                                            </select>
+                                            <textarea name="experience" placeholder="خبرتك مع القطط..." class="w-full p-3 rounded-xl border h-20"></textarea>
+                                            <button type="submit" class="w-full bg-orange-600 text-white py-3 rounded-xl font-bold hover:bg-orange-700">إرسال طلب</button>
+                                        </form>` : 
+                                        `<p class="text-red-500 text-center font-bold">حسابات الملاجئ لا يمكنها التبني</p>`
+                                    )
+                                }
+                                <div class="mt-6 pt-6 border-t">
+                                    <p class="text-sm text-gray-500 mb-1">يعرض بواسطة:</p>
+                                    <p class="font-bold text-gray-800">${cat.shelterName || 'ملجأ'}</p>
+                                    <p class="text-sm text-gray-500">${cat.shelterPhone || ''}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function render() {
             const root = document.getElementById('app-root');
-            let content = '';
-
+            NavbarHTML(); // Update Nav
+            
             switch (state.view) {
-                case 'home': content = renderHero(); break;
-                case 'browse': content = renderBrowse(); break;
-                case 'cat-details': content = renderCatDetails(); break;
-                case 'add-cat': content = renderAddCat(); break;
-                default: content = renderHero();
+                case 'home': root.innerHTML = renderHero(); break;
+                case 'login': root.innerHTML = renderLogin(); break;
+                case 'signup': root.innerHTML = renderLogin(); break; // Same entry point
+                case 'role-selection': root.innerHTML = renderRoleSelection(); break;
+                case 'dashboard': root.innerHTML = renderShelterDashboard(); break;
+                case 'add-cat': root.innerHTML = renderAddCat(); break;
+                case 'browse': root.innerHTML = renderBrowse(); break;
+                case 'cat-details': root.innerHTML = renderCatDetails(); break;
+                default: root.innerHTML = renderHero();
             }
-
-            root.innerHTML = content;
-            lucide.createIcons(); // Re-initialize icons
+            lucide.createIcons();
         }
 
-        // --- Initialization ---
+        // --- Init ---
         async function init() {
+            // Check auth state
+            onAuthStateChanged(auth, async (user) => {
+                state.user = user;
+                if(user) {
+                    // Check if profile exists
+                    const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main'));
+                    if(docSnap.exists()) {
+                        state.profile = docSnap.data();
+                        if(state.view === 'login' || state.view === 'role-selection') window.app.router.navigate('home');
+                        else render();
+                    } else {
+                        // New user, needs role
+                        window.app.router.navigate('role-selection');
+                    }
+                } else {
+                    state.profile = null;
+                    if(state.view === 'dashboard' || state.view === 'add-cat') window.app.router.navigate('login');
+                    else render();
+                }
+            });
+
+            // Load Data
             try {
-                // Auth
+                 // Try custom token first for preview environment
                 if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
                     await signInWithCustomToken(auth, window.__initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                onAuthStateChanged(auth, (user) => {
-                    state.user = user;
-                    if(user) {
-                        setupRealtimeListener();
-                    } else {
-                        // Handle logged out / not ready state by stopping loading
-                        state.loading = false;
-                        render();
-                    }
+                } 
+                // Realtime Cats
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cats'), (snap) => {
+                    const cats = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                    cats.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+                    state.cats = cats;
+                    state.loading = false;
+                    render();
                 });
-            } catch (err) {
-                console.error("Authentication Error:", err);
-                state.loading = false;
-                render();
-                app.ui.showToast('error', 'خطأ في الاتصال بالسيرفر');
-            }
+            } catch(e) { console.error(e); state.loading = false; render(); }
         }
 
-        function setupRealtimeListener() {
-            const q = collection(db, 'artifacts', appId, 'public', 'data', 'cats');
-            
-            // Added Error Handler callback
-            onSnapshot(q, (snapshot) => {
-                const cats = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-                // Sort manually
-                cats.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-                
-                state.cats = cats;
-                state.loading = false;
-                render(); // Re-render when data changes
-            }, (error) => {
-                console.error("Firestore Error:", error);
-                state.loading = false;
-                render(); // Force render to remove spinner
-                app.ui.showToast('error', 'فشل تحميل البيانات');
-            });
-        }
-
-        // Start App
         init();
     </script>
 </body>
