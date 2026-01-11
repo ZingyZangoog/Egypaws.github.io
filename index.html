@@ -79,7 +79,7 @@
     <main id="app-root" class="flex-grow relative">
         <div class="flex justify-center items-center h-screen flex-col gap-4">
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
-            <p class="text-gray-500 text-sm">جاري تهيئة المنصة...</p>
+            <p class="text-gray-500 text-sm">جاري الاتصال والتحميل...</p>
         </div>
     </main>
 
@@ -128,7 +128,6 @@
 
         // --- Firebase Config ---
         const firebaseConfig = JSON.parse(window.__firebase_config || '{}');
-        // FIX: Renamed 'app' to 'firebaseApp' to avoid conflict with window.app
         const firebaseApp = initializeApp(firebaseConfig);
         const auth = getAuth(firebaseApp);
         const db = getFirestore(firebaseApp);
@@ -161,7 +160,7 @@
             ui: {
                 toggleMobileMenu: () => {
                     const menu = document.getElementById('mobile-menu');
-                    menu.classList.toggle('hidden');
+                    if(menu) menu.classList.toggle('hidden');
                 },
                 showToast: (type, message) => {
                     const container = document.getElementById('toast-container');
@@ -171,7 +170,7 @@
                     toast.className = `${color} px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 animate-fade-in transition-all`;
                     toast.innerHTML = `<i data-lucide="${icon}"></i> <span class="font-bold">${message}</span>`;
                     container.appendChild(toast);
-                    lucide.createIcons({ root: toast });
+                    if(window.lucide) window.lucide.createIcons({ root: toast });
                     setTimeout(() => { toast.remove(); }, 3500);
                 },
                 updateFilter: (key, value) => {
@@ -291,7 +290,6 @@
                         window.app.ui.showToast('error', 'يجب أن يكون لديك حساب متبني لإرسال طلب');
                         return;
                     }
-                    // ... (Logic similar to previous, but using profile data)
                     const form = e.target;
                     await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'adoption_requests'), {
                         catId: state.selectedCat.id,
@@ -313,7 +311,6 @@
 
         function NavbarHTML() {
             const isShelter = state.profile?.role === 'shelter';
-            const isAdopter = state.profile?.role === 'adopter';
             const isLoggedIn = !!state.user;
 
             let links = `
@@ -340,12 +337,14 @@
                 `;
             }
 
-            // Inject
-            document.getElementById('desktop-menu').innerHTML = links;
-            document.getElementById('auth-section').innerHTML = authBtns;
+            const desktopMenu = document.getElementById('desktop-menu');
+            const authSection = document.getElementById('auth-section');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if(desktopMenu) desktopMenu.innerHTML = links;
+            if(authSection) authSection.innerHTML = authBtns;
             
-            // Mobile
-            document.getElementById('mobile-menu').innerHTML = `
+            if(mobileMenu) mobileMenu.innerHTML = `
                 ${links}
                 <hr class="my-2">
                 ${!isLoggedIn ? `<button onclick="app.router.navigate('login'); app.ui.toggleMobileMenu()" class="text-right w-full p-2 font-bold">تسجيل دخول</button>` : `<button onclick="app.auth.logout()" class="text-right w-full p-2 font-bold text-red-500">خروج</button>`}
@@ -353,7 +352,6 @@
         }
 
         function renderHero() {
-            // Live Stats
             const catCount = state.cats.length;
             const shelterCount = new Set(state.cats.map(c => c.userId)).size;
 
@@ -401,7 +399,6 @@
                         </div>
                         
                         <button onclick="app.auth.signInGoogle()" class="w-full bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-800 font-bold py-4 rounded-xl flex items-center justify-center gap-3 transition-all mb-4">
-                            <svg class="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
                             استمرار باستخدام Google
                         </button>
                         
@@ -440,7 +437,7 @@
                             </div>
                         </div>
 
-                        <!-- Forms (Initially Hidden) -->
+                        <!-- Forms -->
                         <div id="role-adopter-form" class="hidden mt-8 bg-white p-8 rounded-3xl shadow-xl animate-fade-in">
                             <h3 class="font-bold text-lg mb-4">بيانات المتبني</h3>
                             <input type="text" id="adopter-name" placeholder="اسمك الكامل" class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
@@ -755,58 +752,88 @@
             const root = document.getElementById('app-root');
             NavbarHTML(); // Update Nav
             
+            let content = '';
             switch (state.view) {
-                case 'home': root.innerHTML = renderHero(); break;
-                case 'login': root.innerHTML = renderLogin(); break;
-                case 'signup': root.innerHTML = renderLogin(); break; // Same entry point
-                case 'role-selection': root.innerHTML = renderRoleSelection(); break;
-                case 'dashboard': root.innerHTML = renderShelterDashboard(); break;
-                case 'add-cat': root.innerHTML = renderAddCat(); break;
-                case 'browse': root.innerHTML = renderBrowse(); break;
-                case 'cat-details': root.innerHTML = renderCatDetails(); break;
-                default: root.innerHTML = renderHero();
+                case 'home': content = renderHero(); break;
+                case 'login': content = renderLogin(); break;
+                case 'signup': content = renderLogin(); break; // Same entry point
+                case 'role-selection': content = renderRoleSelection(); break;
+                case 'dashboard': content = renderShelterDashboard(); break;
+                case 'add-cat': content = renderAddCat(); break;
+                case 'browse': content = renderBrowse(); break;
+                case 'cat-details': content = renderCatDetails(); break;
+                default: content = renderHero();
             }
-            lucide.createIcons();
+            root.innerHTML = content;
+            if(window.lucide) window.lucide.createIcons();
         }
 
         // --- Init ---
         async function init() {
-            // Check auth state
+            // 1. Auth Init
+            try {
+                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
+                    await signInWithCustomToken(auth, window.__initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch(e) {
+                console.error("Auth Init Error", e);
+                window.app.ui.showToast('error', 'فشل الاتصال الأولي');
+            }
+
+            // 2. Auth State Listener
             onAuthStateChanged(auth, async (user) => {
                 state.user = user;
                 if(user) {
-                    // Check if profile exists
-                    const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main'));
-                    if(docSnap.exists()) {
-                        state.profile = docSnap.data();
-                        if(state.view === 'login' || state.view === 'role-selection') window.app.router.navigate('home');
-                        else render();
-                    } else {
-                        // New user, needs role
-                        window.app.router.navigate('role-selection');
-                    }
+                    // Check profile
+                    try {
+                        const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'profile', 'main'));
+                        if(docSnap.exists()) {
+                            state.profile = docSnap.data();
+                            if(state.view === 'login' || state.view === 'role-selection') window.app.router.navigate('home');
+                        } else {
+                            // New user, needs role
+                             if(!user.isAnonymous) window.app.router.navigate('role-selection');
+                        }
+                    } catch(e) { console.error("Profile Error", e); }
                 } else {
                     state.profile = null;
                     if(state.view === 'dashboard' || state.view === 'add-cat') window.app.router.navigate('login');
-                    else render();
+                }
+                
+                // Always render initially to clear spinner if data fetching takes time
+                if(state.loading) {
+                    // Wait for data? or just render what we have? 
+                    // Let's render what we have, so UI is interactive.
+                    // But if cats are loading, browse section handles it.
+                    render();
+                } else {
+                    render();
                 }
             });
 
-            // Load Data
+            // 3. Data Listener
             try {
-                 // Try custom token first for preview environment
-                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
-                    await signInWithCustomToken(auth, window.__initial_auth_token);
-                } 
-                // Realtime Cats
-                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cats'), (snap) => {
-                    const cats = snap.docs.map(d => ({id: d.id, ...d.data()}));
-                    cats.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-                    state.cats = cats;
-                    state.loading = false;
-                    render();
-                });
-            } catch(e) { console.error(e); state.loading = false; render(); }
+                onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cats'), 
+                    (snap) => {
+                        const cats = snap.docs.map(d => ({id: d.id, ...d.data()}));
+                        cats.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+                        state.cats = cats;
+                        state.loading = false;
+                        render();
+                    },
+                    (error) => {
+                        console.error("Snapshot Error", error);
+                        state.loading = false;
+                        render(); // Force render to clear spinner
+                    }
+                );
+            } catch(e) { 
+                console.error("Snapshot Init Error", e); 
+                state.loading = false; 
+                render(); 
+            }
         }
 
         init();
