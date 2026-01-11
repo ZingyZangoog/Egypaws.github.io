@@ -102,8 +102,9 @@
     <!-- Main Content Area -->
     <main id="app-root" class="flex-grow relative">
         <!-- Content will be injected here by JS -->
-        <div class="flex justify-center items-center h-screen">
+        <div class="flex justify-center items-center h-screen flex-col gap-4">
             <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500"></div>
+            <p class="text-gray-500 text-sm">جاري تحميل البيانات...</p>
         </div>
     </main>
 
@@ -697,21 +698,36 @@
 
         // --- Initialization ---
         async function init() {
-            // Auth
-            if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
-                await signInWithCustomToken(auth, window.__initial_auth_token);
-            } else {
-                await signInAnonymously(auth);
-            }
+            try {
+                // Auth
+                if (typeof window.__initial_auth_token !== 'undefined' && window.__initial_auth_token) {
+                    await signInWithCustomToken(auth, window.__initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
 
-            onAuthStateChanged(auth, (user) => {
-                state.user = user;
-                if(user) setupRealtimeListener();
-            });
+                onAuthStateChanged(auth, (user) => {
+                    state.user = user;
+                    if(user) {
+                        setupRealtimeListener();
+                    } else {
+                        // Handle logged out / not ready state by stopping loading
+                        state.loading = false;
+                        render();
+                    }
+                });
+            } catch (err) {
+                console.error("Authentication Error:", err);
+                state.loading = false;
+                render();
+                app.ui.showToast('error', 'خطأ في الاتصال بالسيرفر');
+            }
         }
 
         function setupRealtimeListener() {
             const q = collection(db, 'artifacts', appId, 'public', 'data', 'cats');
+            
+            // Added Error Handler callback
             onSnapshot(q, (snapshot) => {
                 const cats = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                 // Sort manually
@@ -720,6 +736,11 @@
                 state.cats = cats;
                 state.loading = false;
                 render(); // Re-render when data changes
+            }, (error) => {
+                console.error("Firestore Error:", error);
+                state.loading = false;
+                render(); // Force render to remove spinner
+                app.ui.showToast('error', 'فشل تحميل البيانات');
             });
         }
 
